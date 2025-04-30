@@ -3,6 +3,7 @@ package com.example.aplicacion_tomar_fotos
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +38,7 @@ class MainActivity : ComponentActivity() {
         when(PackageManager.PERMISSION_GRANTED){
             ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)->{
                 //aqui ponemos la vista de la camara
+                Log.v("PERMISO GARATIZADO", "Los permisos son correctos")
                 VistaDelaCamara()
             }
             else->{
