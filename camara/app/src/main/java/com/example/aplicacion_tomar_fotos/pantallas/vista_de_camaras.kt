@@ -12,34 +12,43 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.internal.OutputStorage
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.viewinterop.AndroidView
 
 import androidx.core.content.ContextCompat
+import com.example.aplicacion_tomar_fotos.R
+import com.example.aplicacion_tomar_fotos.ui.theme.Aplicacion_tomar_fotosTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+
 @Composable
     fun PantallaCamara(){
-        val lente_a_usar= CameraSelector.LENS_FACING_BACK
+        var lente_a_usar = CameraSelector.LENS_FACING_BACK
         val ciclo_de_vida_dueño = LocalLifecycleOwner.current
 
         val contexto = LocalContext.current
 
         val prevista =Preview.Builder().build()
-        val vista_prevista = remember {
-        PreviewView(contexto)
-        }
+        val vista_prevista = remember { PreviewView(contexto) }
 
         val  camarax_selector = CameraSelector.Builder().requireLensFacing(lente_a_usar).build()
         val capturador_de_imagen = remember { ImageCapture.Builder().build() }
@@ -53,14 +62,26 @@ import kotlin.coroutines.suspendCoroutine
             prevista.setSurfaceProvider ( vista_prevista.surfaceProvider )
 
         }
-        Box(contentAlignment = Alignment.BottomCenter){
-            AndroidView(factory = {vista_prevista}, modifier = Modifier.fillMaxSize())
-            Button(onClick = {tomar_foto(capturador_de_imagen, contexto)}) {
-                Text("hola")
-            }
-        }
 
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+            // Imagen de fondo
+            AndroidView(factory = {vista_prevista}, modifier = Modifier.fillMaxSize())
+            Image(
+                painter = painterResource(id = R.drawable.marco),
+                contentDescription = "Fondo de la cámara",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            Button(onClick = {lente_a_usar = CameraSelector.LENS_FACING_FRONT}, colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)) {
+                Text("Tomar foto")
+
+
+            }
+
+        }
     }
+
 private suspend fun Context.obtenerProveedorDeCamara(): ProcessCameraProvider =
     suspendCoroutine { continuacion ->
         ProcessCameraProvider.getInstance(this).also {proveedor_camara ->

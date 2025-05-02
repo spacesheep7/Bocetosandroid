@@ -7,11 +7,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.example.aplicacion_tomar_fotos.pantallas.PantallaCamara
 import com.example.aplicacion_tomar_fotos.ui.theme.Aplicacion_tomar_fotosTheme
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 
 class MainActivity : ComponentActivity() {
     private val solicitud_permisos_camara =
@@ -68,6 +72,25 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
+/*@Composable
+fun CameraWithBackgroundImage() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Imagen de fondo
+
+        Image(
+            painter = painterResource(id = R.drawable.marco),
+            contentDescription = "Fondo de la cámara",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+
+        Aplicacion_tomar_fotosTheme{
+            Surface {
+                PantallaCamara()
+            }
+        }
+    }
+}*/
 
 @Preview(showBackground = true)
 @Composable
